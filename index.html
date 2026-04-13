@@ -14,9 +14,13 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 .nav-right{display:flex;align-items:center;gap:24px}
 .nav-link{font-size:13px;color:#666;text-decoration:none;transition:color .2s}
 .nav-link:hover{color:#0d1526}
-.lang-toggle{display:flex;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden}
-.lang-t{font-size:11px;font-weight:600;padding:5px 10px;background:transparent;border:none;color:#999;cursor:pointer;transition:all .2s}
-.lang-t.active{background:#0d1526;color:#fff}
+.lang-toggle{position:relative;display:inline-block;margin-left:12px;z-index:200}
+.lang-active{font-size:12px;font-weight:600;padding:6px 14px 6px 12px;background:#0d1526;color:#fff;border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;display:flex;align-items:center;gap:4px}
+.lang-arrow{border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #fff;transition:transform 0.2s}
+.lang-drop{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.12);min-width:60px}
+.lang-drop.open{display:flex;flex-direction:column}
+.lang-opt{font-size:12px;font-weight:600;padding:10px 20px;background:transparent;border:none;color:#666;cursor:pointer;text-align:center;letter-spacing:1px;transition:background 0.15s}
+.lang-opt:hover{background:#f0f0f0;color:#0d1526}
 .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 5vw 48px;gap:clamp(40px,5vw,80px);max-width:1400px;margin:0 auto}
 .hero-left{flex:1;max-width:620px}
 .hero-right{flex:0 0 clamp(360px,30vw,460px)}
@@ -80,7 +84,9 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 .hero-left{max-width:100%}.hero-right{flex:auto;width:100%}
 .features-grid{grid-template-columns:1fr}
 .comp-row{grid-template-columns:1fr 1fr 1fr;font-size:12px}
-.nav{padding:0 20px}.nav-right .nav-link{display:none}
+.nav{padding:0 20px}
+.nav-right .nav-link{display:none !important}
+.nav-right{gap:8px}
 .stats-bar{flex-wrap:wrap;padding:0 20px}.stat-item{flex:1 1 50%;max-width:none}
 .features-section,.compare-section,.cta-bottom{padding:60px 20px}
 .trust-row{flex-wrap:wrap;gap:16px}
@@ -98,10 +104,13 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 <a class="nav-link" href="#compare" data-l="en">Compare</a>
 <a class="nav-link" href="#compare" data-l="es">Comparar</a>
 <a class="nav-link" id="nav-email" href="#">info&#64;parcapitalwm.com</a>
-<div class="lang-toggle">
-<button class="lang-t active" onclick="switchLang('pt')">PT</button>
-<button class="lang-t" onclick="switchLang('en')">EN</button>
-<button class="lang-t" onclick="switchLang('es')">ES</button>
+</div>
+<div class="lang-toggle" id="lang-toggle">
+<button class="lang-active" id="lang-btn" onclick="toggleLangDrop()">PT <span class="lang-arrow"></span></button>
+<div class="lang-drop" id="lang-drop">
+<button class="lang-opt" onclick="pickLang('pt')">PT</button>
+<button class="lang-opt" onclick="pickLang('en')">EN</button>
+<button class="lang-opt" onclick="pickLang('es')">ES</button>
 </div>
 </div>
 </nav>
@@ -187,6 +196,24 @@ var emailAddr = 'info' + String.fromCharCode(64) + 'parcapitalwm.com';
 document.getElementById('nav-email').href = 'mailto:' + emailAddr;
 document.getElementById('cta-email').href = 'mailto:' + emailAddr;
 
+function toggleLangDrop() {
+  var drop = document.getElementById('lang-drop');
+  drop.classList.toggle('open');
+}
+
+function pickLang(lang) {
+  document.getElementById('lang-drop').classList.remove('open');
+  document.getElementById('lang-btn').innerHTML = lang.toUpperCase() + ' <span class="lang-arrow"></span>';
+  switchLang(lang);
+}
+
+document.addEventListener('click', function(e) {
+  var toggle = document.getElementById('lang-toggle');
+  if (!toggle.contains(e.target)) {
+    document.getElementById('lang-drop').classList.remove('open');
+  }
+});
+
 function switchLang(lang) {
   var els = document.querySelectorAll('[data-l]');
   for (var i = 0; i < els.length; i++) {
@@ -207,14 +234,6 @@ function switchLang(lang) {
       }
     } else {
       el.style.cssText = 'display:none !important';
-    }
-  }
-  var btns = document.querySelectorAll('.lang-t');
-  for (var j = 0; j < btns.length; j++) {
-    if (btns[j].textContent.trim().toLowerCase() === lang) {
-      btns[j].classList.add('active');
-    } else {
-      btns[j].classList.remove('active');
     }
   }
 }
