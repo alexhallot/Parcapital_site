@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAR Capital</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antialiased;background:#fff}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.97);backdrop-filter:blur(10px);border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;padding:0 5vw;height:60px}
+.nav-logo{display:flex;align-items:center;text-decoration:none}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-link{font-size:13px;color:#666;text-decoration:none;transition:color .2s}
+.nav-link:hover{color:#0d1526}
+.lang-toggle{display:flex;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden}
+.lang-t{font-size:11px;font-weight:600;padding:5px 10px;background:transparent;border:none;color:#999;cursor:pointer;transition:all .2s}
+.lang-t.active{background:#0d1526;color:#fff}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 5vw 48px;gap:clamp(40px,5vw,80px);max-width:1400px;margin:0 auto}
+.hero-left{flex:1;max-width:620px}
+.hero-right{flex:0 0 clamp(360px,30vw,460px)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#f0f7f4;border:1px solid #d4eede;border-radius:100px;font-size:12px;font-weight:600;color:#1a7a4c;margin-bottom:24px}
+.badge-dot{width:6px;height:6px;background:#1a7a4c;border-radius:50%}
+.hero h1{font-size:clamp(36px,3.5vw,52px);font-weight:700;line-height:1.15;letter-spacing:-1px;margin-bottom:20px;color:#0d1526}
+.hero h1 em{color:#b8953f;font-style:normal}
+.hero .sub{font-size:clamp(16px,1.2vw,19px);color:#666;line-height:1.65;margin-bottom:36px;font-weight:400}
+.trust-row{display:flex;gap:32px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#666}
+.trust-icon{width:20px;height:20px;border-radius:50%;background:#f0f7f4;display:flex;align-items:center;justify-content:center}
+.trust-icon svg{width:12px;height:12px;stroke:#1a7a4c;fill:none;stroke-width:2}
+.form-card{background:#fafafa;border:1px solid #eee;border-radius:16px;padding:clamp(28px,2.5vw,40px)}
+.form-card h2{font-size:20px;font-weight:700;margin-bottom:4px;color:#0d1526}
+.form-card .form-sub{font-size:13px;color:#888;margin-bottom:24px}
+.form-group{margin-bottom:14px}
+.form-group label{font-size:12px;font-weight:600;color:#555;margin-bottom:5px;letter-spacing:0.3px}
+.form-group input,.form-group select{width:100%;height:44px;padding:0 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;color:#1a1a1a;background:#fff;transition:border-color .2s;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:#b8953f}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-btn{width:100%;height:48px;background:#0d1526;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;transition:background .2s;margin-top:8px}
+.form-btn:hover{background:#1a2a4a}
+.form-disclaimer{font-size:11px;color:#aaa;margin-top:14px;line-height:1.5;text-align:center}
+.stats-bar{background:#0d1526;padding:0 5vw;display:flex;justify-content:center}
+.stat-item{flex:1;padding:40px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);max-width:300px}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:clamp(28px,2.5vw,36px);font-weight:700;color:#b8953f;margin-bottom:4px}
+.stat-label{font-size:12px;color:rgba(255,255,255,0.4)}
+.features-section{padding:80px 5vw;background:#fff;max-width:1400px;margin:0 auto}
+.sec-label{font-size:12px;font-weight:700;color:#b8953f;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;text-align:center}
+.features-section h2{font-size:32px;font-weight:700;text-align:center;margin-bottom:12px;letter-spacing:-0.5px;color:#0d1526}
+.sec-sub{font-size:15px;color:#888;text-align:center;max-width:500px;margin:0 auto 48px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#eee;border-radius:12px;overflow:hidden}
+.feat{padding:36px;background:#fff}
+.feat-num{font-size:11px;font-weight:700;color:#b8953f;margin-bottom:12px;letter-spacing:1px}
+.feat-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#0d1526}
+.feat-desc{font-size:13px;color:#888;line-height:1.6}
+.compare-section{padding:80px 5vw;background:#fafafa}
+.compare-section h2{font-size:32px;font-weight:700;text-align:center;margin-bottom:48px;letter-spacing:-0.5px;color:#0d1526}
+.comp-grid{max-width:900px;margin:0 auto}
+.comp-row{display:grid;grid-template-columns:200px 1fr 1fr;border-bottom:1px solid #eee;font-size:14px}
+.comp-row.header{font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:#888;border-bottom:2px solid #ddd}
+.comp-cell{padding:14px 16px;display:flex;align-items:center}
+.comp-cell.label{font-weight:600;color:#0d1526}
+.comp-cell.trad{color:#999}
+.comp-cell.par{background:rgba(184,149,63,0.04);color:#0d1526;font-weight:600}
+.comp-check{color:#1a7a4c;font-weight:700}
+.comp-cross{color:#cc4444}
+.cta-bottom{padding:100px 5vw;text-align:center;background:#0d1526}
+.cta-bottom h2{font-size:32px;font-weight:700;color:#fff;margin-bottom:12px}
+.cta-bottom h2 em{color:#b8953f;font-style:normal}
+.cta-bottom p{font-size:15px;color:rgba(255,255,255,0.4);margin-bottom:32px}
+.cta-btn{display:inline-block;padding:14px 40px;background:#b8953f;color:#0d1526;font-size:15px;font-weight:700;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:background .2s;font-family:inherit}
+.cta-btn:hover{background:#d4b35c}
+.footer{padding:40px 5vw;background:#080e1a;font-size:11px;color:rgba(255,255,255,0.2);line-height:1.7}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-logo{margin-bottom:16px}
+[data-l]{display:none !important}
+@media(max-width:900px){
+.hero{flex-direction:column;padding:80px 20px 40px;gap:32px}
+.hero-left{max-width:100%}.hero-right{flex:auto;width:100%}
+.features-grid{grid-template-columns:1fr}
+.comp-row{grid-template-columns:1fr 1fr 1fr;font-size:12px}
+.nav{padding:0 20px}.nav-right .nav-link{display:none}
+.stats-bar{flex-wrap:wrap;padding:0 20px}.stat-item{flex:1 1 50%;max-width:none}
+.features-section,.compare-section,.cta-bottom{padding:60px 20px}
+.trust-row{flex-wrap:wrap;gap:16px}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+<a class="nav-logo" href="#"><svg width="220" height="28" viewBox="0 0 220 28"><rect x="0" y="2" width="4.5" height="24" rx="0.5" fill="#0d1526"/><rect x="7" y="2" width="4.5" height="24" rx="0.5" fill="#0d1526" opacity="0.5"/><rect x="14" y="2" width="4.5" height="24" rx="0.5" fill="#b8953f"/><text x="28" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#0d1526">PAR</text><text x="76" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#b8953f">Capital</text></svg></a>
+<div class="nav-right">
+<a class="nav-link" href="#features" data-l="pt">Plataforma</a>
+<a class="nav-link" href="#features" data-l="en">Platform</a>
+<a class="nav-link" href="#features" data-l="es">Plataforma</a>
+<a class="nav-link" href="#compare" data-l="pt">Comparativo</a>
+<a class="nav-link" href="#compare" data-l="en">Compare</a>
+<a class="nav-link" href="#compare" data-l="es">Comparar</a>
+<a class="nav-link" id="nav-email" href="#">info&#64;parcapitalwm.com</a>
+<div class="lang-toggle">
+<button class="lang-t active" onclick="switchLang('pt')">PT</button>
+<button class="lang-t" onclick="switchLang('en')">EN</button>
+<button class="lang-t" onclick="switchLang('es')">ES</button>
+</div>
+</div>
+</nav>
+<section class="hero">
+<div class="hero-left">
+<div class="badge"><div class="badge-dot"></div><span data-l="pt">Gestora regulada — Interactive Brokers</span><span data-l="en">Regulated manager — Interactive Brokers</span><span data-l="es">Gestora regulada — Interactive Brokers</span></div>
+<div data-l="pt"><h1>Invista nos <em>melhores mercados</em> do mundo</h1><p class="sub">Acesso direto a 160+ mercados globais via Interactive Brokers. Gestão profissional, custódia internacional com proteção SIPC, câmbio integrado. Sem conflito de interesse.</p></div>
+<div data-l="en"><h1>Invest in the world's <em>best markets</em></h1><p class="sub">Direct access to 160+ global markets via Interactive Brokers. Professional management, international custody with SIPC protection, integrated FX. No conflicts of interest.</p></div>
+<div data-l="es"><h1>Invierta en los <em>mejores mercados</em> del mundo</h1><p class="sub">Acceso directo a 160+ mercados globales via Interactive Brokers. Gestión profesional, custodia internacional con protección SIPC, cambio integrado. Sin conflicto de interés.</p></div>
+<div class="trust-row">
+<div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 16 16"><path d="M13 5L6 12L3 9"/></svg></div><span data-l="pt">Custódia na IB</span><span data-l="en">Custody at IB</span><span data-l="es">Custodia en IB</span></div>
+<div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 16 16"><path d="M13 5L6 12L3 9"/></svg></div><span data-l="pt">Proteção SIPC</span><span data-l="en">SIPC protection</span><span data-l="es">Protección SIPC</span></div>
+<div class="trust-item"><div class="trust-icon"><svg viewBox="0 0 16 16"><path d="M13 5L6 12L3 9"/></svg></div><span data-l="pt">160+ mercados</span><span data-l="en">160+ markets</span><span data-l="es">160+ mercados</span></div>
+</div>
+</div>
+<div class="hero-right">
+<div class="form-card" id="form-wrapper">
+<h2 data-l="pt">Abra sua conta</h2><h2 data-l="en">Open your account</h2><h2 data-l="es">Abra su cuenta</h2>
+<p class="form-sub" data-l="pt">Preencha seus dados e nossa equipe entrará em contato.</p><p class="form-sub" data-l="en">Fill in your details and our team will reach out.</p><p class="form-sub" data-l="es">Complete sus datos y nuestro equipo lo contactará.</p>
+<form id="lead-form" onsubmit="submitForm(event)">
+<div class="form-row"><div class="form-group"><label data-l="pt">Nome</label><label data-l="en">First name</label><label data-l="es">Nombre</label><input type="text" name="name" required></div><div class="form-group"><label data-l="pt">Sobrenome</label><label data-l="en">Last name</label><label data-l="es">Apellido</label><input type="text" name="lastname" required></div></div>
+<div class="form-group"><label>E-mail</label><input type="email" name="email" required></div>
+<div class="form-group"><label data-l="pt">Telefone (WhatsApp)</label><label data-l="en">Phone (WhatsApp)</label><label data-l="es">Teléfono (WhatsApp)</label><input type="tel" name="phone" required></div>
+<div class="form-row"><div class="form-group"><label data-l="pt">País de residência</label><label data-l="en">Country of residence</label><label data-l="es">País de residência</label><select name="country" required><option value="">---</option><option value="BR">Brasil</option><option value="UY">Uruguay</option><option value="AR">Argentina</option><option value="CO">Colômbia</option><option value="MX">México</option><option value="CL">Chile</option><option value="PE">Peru</option><option value="PT">Portugal</option><option value="US">United States</option><option value="OTHER">Other</option></select></div><div class="form-group"><label data-l="pt">Patrimônio a investir</label><label data-l="en">Amount to invest</label><label data-l="es">Patrimonio a invertir</label><select name="amount" required><option value="">---</option><option value="50-100k">USD 50k - 100k</option><option value="100-250k">USD 100k - 250k</option><option value="250-500k">USD 250k - 500k</option><option value="500k-1m">USD 500k - 1M</option><option value="1m-5m">USD 1M - 5M</option><option value="5m+">USD 5M+</option></select></div></div>
+<button type="submit" class="form-btn" data-l="pt">Quero abrir minha conta</button><button type="submit" class="form-btn" data-l="en">Open my account</button><button type="submit" class="form-btn" data-l="es">Abrir mi cuenta</button>
+</form>
+<p class="form-disclaimer" data-l="pt">Ao enviar, você concorda em ser contatado pela PAR Capital.</p><p class="form-disclaimer" data-l="en">By submitting, you agree to be contacted by PAR Capital.</p><p class="form-disclaimer" data-l="es">Al enviar, acepta ser contactado por PAR Capital.</p>
+<div id="form-success" style="display:none;text-align:center;padding:40px 0">
+<div style="width:48px;height:48px;border-radius:50%;background:#f0f7f4;display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px"><svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="#1a7a4c" stroke-width="2"><path d="M13 5L6 12L3 9"/></svg></div>
+<p style="font-size:16px;font-weight:700;color:#1a7a4c;margin-bottom:8px" data-l="pt">Recebemos seus dados!</p><p style="font-size:16px;font-weight:700;color:#1a7a4c;margin-bottom:8px" data-l="en">We received your details!</p><p style="font-size:16px;font-weight:700;color:#1a7a4c;margin-bottom:8px" data-l="es">Recibimos sus datos!</p>
+<p style="font-size:13px;color:#888" data-l="pt">Entraremos em contato em até 24h.</p><p style="font-size:13px;color:#888" data-l="en">We will contact you within 24h.</p><p style="font-size:13px;color:#888" data-l="es">Lo contactaremos en hasta 24h.</p>
+</div>
+</div>
+</div>
+</section>
+<div class="stats-bar">
+<div class="stat-item"><div class="stat-num">160+</div><div class="stat-label" data-l="pt">Mercados globais</div><div class="stat-label" data-l="en">Global markets</div><div class="stat-label" data-l="es">Mercados globales</div></div>
+<div class="stat-item"><div class="stat-num">34</div><div class="stat-label" data-l="pt">Países</div><div class="stat-label" data-l="en">Countries</div><div class="stat-label" data-l="es">Países</div></div>
+<div class="stat-item"><div class="stat-num">28</div><div class="stat-label" data-l="pt">Moedas</div><div class="stat-label" data-l="en">Currencies</div><div class="stat-label" data-l="es">Monedas</div></div>
+<div class="stat-item"><div class="stat-num">SIPC</div><div class="stat-label" data-l="pt">Proteção até USD 500k</div><div class="stat-label" data-l="en">Protection up to USD 500k</div><div class="stat-label" data-l="es">Protección hasta USD 500k</div></div>
+</div>
+<section class="features-section" id="features">
+<div class="sec-label" data-l="pt">A plataforma</div><div class="sec-label" data-l="en">The platform</div><div class="sec-label" data-l="es">La plataforma</div>
+<h2 data-l="pt">Tudo que você precisa. Uma conta.</h2><h2 data-l="en">Everything you need. One account.</h2><h2 data-l="es">Todo lo que necesita. Una cuenta.</h2>
+<p class="sec-sub" data-l="pt">Via Interactive Brokers, a maior corretora eletrônica do mundo.</p><p class="sec-sub" data-l="en">Via Interactive Brokers, the world's largest electronic broker.</p><p class="sec-sub" data-l="es">Via Interactive Brokers, el mayor broker electrónico del mundo.</p>
+<div class="features-grid">
+<div class="feat"><div class="feat-num">01</div><div class="feat-title" data-l="pt">Ações globais</div><div class="feat-title" data-l="en">Global equities</div><div class="feat-title" data-l="es">Acciones globales</div><div class="feat-desc" data-l="pt">NYSE, NASDAQ, LSE, Euronext, TSE e dezenas de bolsas. Execução institucional.</div><div class="feat-desc" data-l="en">NYSE, NASDAQ, LSE, Euronext, TSE and dozens of exchanges. Institutional execution.</div><div class="feat-desc" data-l="es">NYSE, NASDAQ, LSE, Euronext, TSE y docenas de bolsas. Ejecución institucional.</div></div>
+<div class="feat"><div class="feat-num">02</div><div class="feat-title" data-l="pt">Opções e futuros</div><div class="feat-title" data-l="en">Options & futures</div><div class="feat-title" data-l="es">Opciones y futuros</div><div class="feat-desc" data-l="pt">Estratégias sofisticadas, índices, commodities, moedas.</div><div class="feat-desc" data-l="en">Sophisticated strategies, indices, commodities, currencies.</div><div class="feat-desc" data-l="es">Estratégias sofisticadas, índices, commodities, monedas.</div></div>
+<div class="feat"><div class="feat-num">03</div><div class="feat-title" data-l="pt">Renda fixa</div><div class="feat-title" data-l="en">Fixed income</div><div class="feat-title" data-l="es">Renta fija</div><div class="feat-desc" data-l="pt">Treasuries, corporate bonds, bonds soberanos.</div><div class="feat-desc" data-l="en">Treasuries, corporate bonds, sovereign bonds.</div><div class="feat-desc" data-l="es">Treasuries, bonos corporativos, bonos soberanos.</div></div>
+<div class="feat"><div class="feat-num">04</div><div class="feat-title" data-l="pt">Forex</div><div class="feat-title" data-l="en">Forex</div><div class="feat-title" data-l="es">Forex</div><div class="feat-desc" data-l="pt">100+ pares de moedas com spreads institucionais.</div><div class="feat-desc" data-l="en">100+ currency pairs with institutional spreads.</div><div class="feat-desc" data-l="es">100+ pares de monedas con spreads institucionales.</div></div>
+<div class="feat"><div class="feat-num">05</div><div class="feat-title" data-l="pt">ETFs globais</div><div class="feat-title" data-l="en">Global ETFs</div><div class="feat-title" data-l="es">ETFs globales</div><div class="feat-desc" data-l="pt">Milhares de ETFs de todas as regiões e classes.</div><div class="feat-desc" data-l="en">Thousands of ETFs across all regions and classes.</div><div class="feat-desc" data-l="es">Miles de ETFs de todas las regiones y clases.</div></div>
+<div class="feat"><div class="feat-num">06</div><div class="feat-title" data-l="pt">Multi-moeda</div><div class="feat-title" data-l="en">Multi-currency</div><div class="feat-title" data-l="es">Multi-moneda</div><div class="feat-desc" data-l="pt">Saldos em 28 moedas na mesma conta.</div><div class="feat-desc" data-l="en">Balances in 28 currencies in one account.</div><div class="feat-desc" data-l="es">Saldos en 28 monedas en la misma cuenta.</div></div>
+</div>
+</section>
+<section class="compare-section" id="compare">
+<h2 data-l="pt">PAR Capital vs. plataformas tradicionais</h2><h2 data-l="en">PAR Capital vs. traditional platforms</h2><h2 data-l="es">PAR Capital vs. plataformas tradicionales</h2>
+<div class="comp-grid">
+<div class="comp-row header"><div class="comp-cell"></div><div class="comp-cell" data-l="pt">Tradicionais</div><div class="comp-cell" data-l="en">Traditional</div><div class="comp-cell" data-l="es">Tradicionales</div><div class="comp-cell par">PAR Capital</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Mercados</div><div class="comp-cell label" data-l="en">Markets</div><div class="comp-cell label" data-l="es">Mercados</div><div class="comp-cell trad" data-l="pt">Apenas EUA</div><div class="comp-cell trad" data-l="en">US only</div><div class="comp-cell trad" data-l="es">Solo EE.UU.</div><div class="comp-cell par comp-check">160+ globais</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Custódia</div><div class="comp-cell label" data-l="en">Custody</div><div class="comp-cell label" data-l="es">Custódia</div><div class="comp-cell trad">DriveWealth / Apex</div><div class="comp-cell par comp-check">Interactive Brokers</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Ativos</div><div class="comp-cell label" data-l="en">Assets</div><div class="comp-cell label" data-l="es">Activos</div><div class="comp-cell trad" data-l="pt">Ações e ETFs</div><div class="comp-cell trad" data-l="en">Stocks and ETFs</div><div class="comp-cell trad" data-l="es">Acciones y ETFs</div><div class="comp-cell par comp-check" data-l="pt">Ações, opções, futuros, FX, bonds</div><div class="comp-cell par comp-check" data-l="en">Stocks, options, futures, FX, bonds</div><div class="comp-cell par comp-check" data-l="es">Acciones, opciones, futuros, FX, bonos</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Gestão</div><div class="comp-cell label" data-l="en">Management</div><div class="comp-cell label" data-l="es">Gestión</div><div class="comp-cell trad comp-cross">Self-directed</div><div class="comp-cell par comp-check" data-l="pt">Profissional e dedicada</div><div class="comp-cell par comp-check" data-l="en">Professional and dedicated</div><div class="comp-cell par comp-check" data-l="es">Profesional y dedicada</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Conflito</div><div class="comp-cell label" data-l="en">Conflicts</div><div class="comp-cell label" data-l="es">Conflicto</div><div class="comp-cell trad comp-cross" data-l="pt">Produto próprio</div><div class="comp-cell trad comp-cross" data-l="en">Proprietary products</div><div class="comp-cell trad comp-cross" data-l="es">Producto propio</div><div class="comp-cell par comp-check" data-l="pt">Zero - IB-first</div><div class="comp-cell par comp-check" data-l="en">Zero - IB-first</div><div class="comp-cell par comp-check" data-l="es">Cero - IB-first</div></div>
+<div class="comp-row"><div class="comp-cell label" data-l="pt">Moedas</div><div class="comp-cell label" data-l="en">Currencies</div><div class="comp-cell label" data-l="es">Monedas</div><div class="comp-cell trad">USD</div><div class="comp-cell par comp-check" data-l="pt">28 moedas</div><div class="comp-cell par comp-check" data-l="en">28 currencies</div><div class="comp-cell par comp-check" data-l="es">28 monedas</div></div>
+</div>
+</section>
+<section class="cta-bottom">
+<div data-l="pt"><h2>Pronto para investir <em>como institucional?</em></h2><p>Preencha o formulário acima ou entre em contato diretamente.</p></div>
+<div data-l="en"><h2>Ready to invest <em>like an institution?</em></h2><p>Fill in the form above or contact us directly.</p></div>
+<div data-l="es"><h2>Listo para invertir <em>como institucional?</em></h2><p>Complete el formulario o contáctenos directamente.</p></div>
+<a class="cta-btn" id="cta-email" href="#">info&#64;parcapitalwm.com</a>
+</section>
+<footer class="footer">
+<div class="footer-inner">
+<div class="footer-logo"><svg width="180" height="24" viewBox="0 0 220 28"><rect x="0" y="2" width="4.5" height="24" rx="0.5" fill="#8a9bae"/><rect x="7" y="2" width="4.5" height="24" rx="0.5" fill="#8a9bae" opacity="0.5"/><rect x="14" y="2" width="4.5" height="24" rx="0.5" fill="#b8953f"/><text x="28" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#ffffff">PAR</text><text x="76" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#b8953f">Capital</text></svg></div>
+<p data-l="pt">PAR Capital SA é uma gestora de ativos regulada pelo Banco Central do Uruguai (BCU). Os serviços de custódia e execução são prestados pela Interactive Brokers LLC, membro da FINRA e SIPC, que protege contas de clientes em até USD 500.000. Investimentos envolvem riscos. Rendimentos passados não garantem resultados futuros. Este site não constitui oferta de valores mobiliários em nenhuma jurisdição.</p>
+<p data-l="en">PAR Capital SA is an asset management firm regulated by the Central Bank of Uruguay (BCU). Custody and execution services are provided by Interactive Brokers LLC, member of FINRA and SIPC, which protects client accounts up to USD 500,000. Investments involve risk. Past performance does not guarantee future results. This website does not constitute an offer of securities in any jurisdiction.</p>
+<p data-l="es">PAR Capital SA es una gestora de activos regulada por el Banco Central del Uruguay (BCU). Los servicios de custodia y ejecución son prestados por Interactive Brokers LLC, miembro de FINRA y SIPC, que protege cuentas de clientes hasta USD 500.000. Las inversiones implican riesgos. Rendimientos pasados no garantizan resultados futuros. Este sitio no constituye oferta de valores en ninguna jurisdicción.</p>
+</div>
+</footer>
+<script>
+var emailAddr = 'info' + String.fromCharCode(64) + 'parcapitalwm.com';
+document.getElementById('nav-email').href = 'mailto:' + emailAddr;
+document.getElementById('cta-email').href = 'mailto:' + emailAddr;
+
+function switchLang(lang) {
+  var els = document.querySelectorAll('[data-l]');
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    var show = el.getAttribute('data-l') === lang;
+    var tag = el.tagName.toLowerCase();
+    if (show) {
+      if (tag === 'span' || tag === 'a' || tag === 'em') {
+        el.style.cssText = 'display:inline !important';
+      } else if (el.classList.contains('comp-cell')) {
+        el.style.cssText = 'display:flex !important';
+      } else if (tag === 'label') {
+        el.style.cssText = 'display:block !important';
+      } else if (tag === 'button') {
+        el.style.cssText = 'display:block !important';
+      } else {
+        el.style.cssText = 'display:block !important';
+      }
+    } else {
+      el.style.cssText = 'display:none !important';
+    }
+  }
+  var btns = document.querySelectorAll('.lang-t');
+  for (var j = 0; j < btns.length; j++) {
+    if (btns[j].textContent.trim().toLowerCase() === lang) {
+      btns[j].classList.add('active');
+    } else {
+      btns[j].classList.remove('active');
+    }
+  }
+}
+
+function submitForm(e) {
+  e.preventDefault();
+  var f = document.getElementById('lead-form');
+  var d = new FormData(f);
+  var body = 'Nova lead PAR Capital:%0A';
+  d.forEach(function(v, k) { body += k + ': ' + v + '%0A'; });
+  window.open('mailto:' + emailAddr + '?subject=Nova lead - PAR Capital&body=' + body);
+  f.style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+switchLang('pt');
+</script>
+</body>
+</html>
