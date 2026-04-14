@@ -267,7 +267,12 @@ function submitForm(e) {
   document.getElementById('form-success').style.display = 'block';
 }
 
-switchLang('pt');
+var browserLang = (navigator.language || navigator.userLanguage || 'pt').toLowerCase();
+var detectedLang = 'en';
+if (browserLang.indexOf('pt') === 0) { detectedLang = 'pt'; }
+else if (browserLang.indexOf('es') === 0) { detectedLang = 'es'; }
+switchLang(detectedLang);
+document.getElementById('lang-btn').innerHTML = detectedLang.toUpperCase() + ' <span class="lang-arrow"></span>';
 </script>
 </body>
 </html>
