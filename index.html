@@ -84,6 +84,14 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 .footer-inner{max-width:900px;margin:0 auto}
 .footer-logo{margin-bottom:16px}
 [data-l]{display:none !important}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:22px;height:2px;background:#0d1526;border-radius:2px;transition:transform .3s,opacity .3s}
+.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:#fff;border-bottom:1px solid #eee;padding:16px 20px;flex-direction:column;gap:0;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:15px;color:#666;text-decoration:none;padding:14px 0;border-bottom:1px solid #f0f0f0;transition:color .2s}
+.mobile-menu a:last-child{border-bottom:none}
+.mobile-menu a.nav-link--dashboard{font-weight:700;color:#0d1526}
+.mobile-menu a:hover{color:#0d1526}
 @media(max-width:900px){
 .hero{flex-direction:column;padding:80px 20px 40px;gap:32px}
 .hero-left{max-width:100%}.hero-right{flex:auto;width:100%}
@@ -91,11 +99,12 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 .comp-row{grid-template-columns:1fr 1fr 1fr;font-size:12px}
 .nav-inner{padding:0 12px}
 .nav-logo svg{width:180px}
-.nav-right .nav-link{display:none !important}
-.nav-right{gap:6px}
-.nav-right #nav-email{display:none !important}
+.nav-desktop{display:none !important}
+.nav-right{gap:8px}
 .lang-toggle{margin-left:0}
 .lang-active{padding:5px 10px 5px 8px;font-size:11px}
+.hamburger{display:flex}
+.nav-logo svg{width:280px;height:36px}
 .stats-bar{flex-wrap:wrap;padding:0 20px}.stat-item{flex:1 1 50%;max-width:none}
 .features-section,.compare-section,.cta-bottom{padding:60px 20px}
 .trust-row{flex-wrap:wrap;gap:16px}
@@ -107,13 +116,16 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 <div class="nav-inner">
 <a class="nav-logo" href="#"><svg width="280" height="36" viewBox="0 0 220 28"><rect x="0" y="2" width="4.5" height="24" rx="0.5" fill="#0d1526"/><rect x="7" y="2" width="4.5" height="24" rx="0.5" fill="#0d1526" opacity="0.5"/><rect x="14" y="2" width="4.5" height="24" rx="0.5" fill="#b8953f"/><text x="28" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#0d1526">PAR</text><text x="76" y="19" font-family="DM Sans,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#b8953f">Capital</text></svg></a>
 <div class="nav-right">
-<a class="nav-link" href="#features" data-l="pt">Plataforma</a>
-<a class="nav-link" href="#features" data-l="en">Platform</a>
-<a class="nav-link" href="#features" data-l="es">Plataforma</a>
-<a class="nav-link" href="#compare" data-l="pt">Comparativo</a>
-<a class="nav-link" href="#compare" data-l="en">Compare</a>
-<a class="nav-link" href="#compare" data-l="es">Comparar</a>
-<a class="nav-link nav-link--dashboard" href="https://dashboard.parcapitalwm.com/">Dashboard</a>
+<a class="nav-link nav-desktop" href="#features" data-l="pt">Plataforma</a>
+<a class="nav-link nav-desktop" href="#features" data-l="en">Platform</a>
+<a class="nav-link nav-desktop" href="#features" data-l="es">Plataforma</a>
+<a class="nav-link nav-desktop" href="#compare" data-l="pt">Comparativo</a>
+<a class="nav-link nav-desktop" href="#compare" data-l="en">Compare</a>
+<a class="nav-link nav-desktop" href="#compare" data-l="es">Comparar</a>
+<a class="nav-link nav-link--dashboard nav-desktop" href="https://dashboard.parcapitalwm.com/">Dashboard</a>
+<button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+<span></span><span></span><span></span>
+</button>
 <div class="lang-toggle" id="lang-toggle">
 <button class="lang-active" id="lang-btn" onclick="toggleLangDrop()">PT <span class="lang-arrow"></span></button>
 <div class="lang-drop" id="lang-drop">
@@ -125,6 +137,15 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 </div>
 </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+<a href="#features" onclick="closeMobileMenu()" data-l="pt">Plataforma</a>
+<a href="#features" onclick="closeMobileMenu()" data-l="en">Platform</a>
+<a href="#features" onclick="closeMobileMenu()" data-l="es">Plataforma</a>
+<a href="#compare" onclick="closeMobileMenu()" data-l="pt">Comparativo</a>
+<a href="#compare" onclick="closeMobileMenu()" data-l="en">Compare</a>
+<a href="#compare" onclick="closeMobileMenu()" data-l="es">Comparar</a>
+<a href="https://dashboard.parcapitalwm.com/" class="nav-link--dashboard" onclick="closeMobileMenu()">Dashboard</a>
+</div>
 <section class="hero">
 <div class="hero-left">
 <div class="badge"><div class="badge-dot"></div><span data-l="pt">Gestora regulada — Interactive Brokers</span><span data-l="en">Regulated manager — Interactive Brokers</span><span data-l="es">Gestora regulada — Interactive Brokers</span></div>
@@ -207,6 +228,16 @@ body{font-family:'DM Sans',sans-serif;color:#1a1a1a;-webkit-font-smoothing:antia
 var emailAddr = 'info' + String.fromCharCode(64) + 'parcapitalwm.com';
 document.getElementById('cta-email').href = 'mailto:' + emailAddr;
 
+function toggleMobileMenu() {
+  var menu = document.getElementById('mobile-menu');
+  var btn = document.getElementById('hamburger');
+  var open = menu.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+
 function toggleLangDrop() {
   var drop = document.getElementById('lang-drop');
   drop.classList.toggle('open');
@@ -226,13 +257,16 @@ document.addEventListener('click', function(e) {
 });
 
 function switchLang(lang) {
+  var isMobile = window.innerWidth <= 900;
   var els = document.querySelectorAll('[data-l]');
   for (var i = 0; i < els.length; i++) {
     var el = els[i];
     var show = el.getAttribute('data-l') === lang;
     var tag = el.tagName.toLowerCase();
     if (show) {
-      if (tag === 'span' || tag === 'a' || tag === 'em') {
+      if (isMobile && el.classList.contains('nav-desktop')) {
+        el.style.cssText = 'display:none !important';
+      } else if (tag === 'span' || tag === 'a' || tag === 'em') {
         el.style.cssText = 'display:inline !important';
       } else if (el.classList.contains('comp-cell')) {
         el.style.cssText = 'display:flex !important';
